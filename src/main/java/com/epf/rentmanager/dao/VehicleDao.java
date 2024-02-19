@@ -62,7 +62,7 @@ public class VehicleDao {
 		}
 	}
 
-	public Vehicle findById(int id) throws DaoException {
+	public Vehicle findById(long id) throws DaoException {
 		try {
 			Connection connection = ConnectionManager.getConnection();
 			PreparedStatement ps =

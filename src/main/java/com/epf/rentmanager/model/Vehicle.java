@@ -2,11 +2,11 @@ package com.epf.rentmanager.model;
 
 public class Vehicle {
 
-    private int id;
+    private long id;
     private String constructeur;
     private int nb_places;
 
-    public Vehicle(int id, String constructeur, int nb_places) {
+    public Vehicle(long id, String constructeur, int nb_places) {
         this.id = id;
         this.constructeur = constructeur;
         this.nb_places = nb_places;
@@ -16,7 +16,7 @@ public class Vehicle {
 
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

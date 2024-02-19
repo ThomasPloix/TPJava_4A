@@ -3,6 +3,8 @@ package com.epf.rentmanager.service;
 import java.util.List;
 
 
+import com.epf.rentmanager.dao.DaoException;
+import com.epf.rentmanager.model.Client;
 import com.epf.rentmanager.model.Vehicle;
 import com.epf.rentmanager.dao.VehicleDao;
 
@@ -25,21 +27,35 @@ public class VehicleService {
 	
 	
 	public long create(Vehicle vehicle) throws ServiceException {
-		// TODO: créer un véhicule
-
-        return 0;
+		if(vehicle.getNb_places()<=1 || vehicle.getConstructeur().isEmpty()){
+			throw new ServiceException("Erreur lors de la création du vehicule; nombre de place <1");
+		}
+		try{
+			return vehicleDao.create(vehicle);
+		} catch (DaoException e) {
+			throw new RuntimeException(e);
+		}
     }
 
 	public Vehicle findById(long id) throws ServiceException {
-		// TODO: récupérer un véhicule par son id
-
-        return null;
+		try{
+			Vehicle vehicle = vehicleDao.findById(id);
+			if(vehicle!=null){
+				return vehicle;
+			}
+			throw new ServiceException("Le vehicule n°" +id + " n'a pas été retrouvé dans la base de donnée");
+		} catch (DaoException e) {
+			throw new ServiceException("Erreur lors de la récupération du vehicule");
+		}
     }
 
 	public List<Vehicle> findAll() throws ServiceException {
-		// TODO: récupérer tous les clients
-
-        return null;
+		try {
+			List<Vehicle> lvehicule = vehicleDao.findAll();
+			return lvehicule;
+		} catch (DaoException e) {
+			throw new ServiceException("Erreur lors de la récupération de la liste des vehicules");
+		}
     }
 	
 }
