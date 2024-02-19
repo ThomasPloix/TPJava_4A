@@ -9,12 +9,12 @@ public class Client {
     private String email;
     private LocalDate naissance;
 
-    public Client(long id, String name, String prenom, String email, LocalDate naissance) {
+    public Client(long id, String name, String prenom, String email, String naissance) {
         this.id = id;
         this.name = name;
         this.prenom = prenom;
         this.email = email;
-        this.naissance = naissance;
+        this.naissance = LocalDate.parse(naissance);
     }
 
     public Client() {

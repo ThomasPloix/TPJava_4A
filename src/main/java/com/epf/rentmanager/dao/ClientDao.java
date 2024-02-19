@@ -1,12 +1,12 @@
 package com.epf.rentmanager.dao;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.epf.rentmanager.model.Client;
 import com.epf.rentmanager.persistence.ConnectionManager;
-import com.epf.rentmanager.model.Reservation;
 
 public class ClientDao {
 	
@@ -39,8 +39,9 @@ public class ClientDao {
 			ps.close();
 			connection.close();
 			if (resultSet.next()) {
-				return resultSet.getLong(1);
-			}else throw new DaoException("Erreur lors de la creation");
+				long idCreer= resultSet.getLong(1);
+				return idCreer;
+			}else throw new DaoException("Erreur lors de la creation du Client");
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
@@ -63,12 +64,54 @@ public class ClientDao {
 	}
 
 	public Client findById(long id) throws DaoException {
+		try {
+			Connection connection = ConnectionManager.getConnection();
+			PreparedStatement ps =
+					connection.prepareStatement(FIND_CLIENT_QUERY, Statement.RETURN_GENERATED_KEYS);
 
-		return new Client();
+			ps.setLong(1, id);
+			ps.executeQuery();
+			ResultSet resultSet = ps.getGeneratedKeys();
+			ps.close();
+			connection.close();
+			if (resultSet.next()) {
+				String name = resultSet.getString(1);
+				String prenom = resultSet.getString(2);
+				String email = resultSet.getString(3);
+				String naissance = resultSet.getString(4);
+				return new Client(id, name, prenom, email, naissance);
+			} else throw new DaoException("Erreur lors de la recherche");
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
-	public List<Client> findAll() throws DaoException {
-		return new ArrayList<Client>();
+        public List<Client> findAll() throws DaoException {
+			try {
+                Connection connection = ConnectionManager.getConnection();
+                PreparedStatement ps =
+                        connection.prepareStatement(FIND_CLIENTS_QUERY, Statement.RETURN_GENERATED_KEYS);
+                ps.executeQuery();
+                ResultSet resultSet = ps.getGeneratedKeys();
+                ps.close();
+                connection.close();
+                resultSet.next();
+
+				List<Client> lClient= new ArrayList<>();
+                do {
+					long id = resultSet.getLong(1);
+					String name = resultSet.getString(2);
+					String prenom = resultSet.getString(3);
+					String email = resultSet.getString(4);
+                    String naissance = resultSet.getString(5);
+					lClient.add(new Client(id, name, prenom, email, naissance));
+                } while (resultSet.next());
+                return lClient;
+            } catch (SQLException e) {
+				throw new RuntimeException(e);
+			}
+
 	}
 
 }
