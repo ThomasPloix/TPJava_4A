@@ -10,22 +10,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
-@WebServlet("/cars")
-public class VehicleListServlet extends HttpServlet {
-
+@WebServlet("/cars/create")
+public class VehicleCreateServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        this.getServletContext().getRequestDispatcher("/WEB-INF/views/vehicles/create.jsp").forward(request, response);
+    }
+    protected void doPost(HttpServletRequest request, HttpServletResponse
+            response) throws ServletException, IOException {
+        int seat = Integer.parseInt( request.getParameter("seats"));
+        String modele =  request.getParameter("modele");
+        String  constructeur =request.getParameter("manufacturer");
+
         VehicleService vehicleService = VehicleService.getInstance();
-        List<Vehicle> tve= new ArrayList<>();
         try {
-            tve= vehicleService.findAll();
+            vehicleService.create(new Vehicle(1, constructeur,seat,modele));
         } catch (ServiceException e) {
             throw new RuntimeException(e);
         }
-        request.setAttribute("vehicles",tve);
-        this.getServletContext().getRequestDispatcher("/WEB-INF/views/vehicles/list.jsp").forward(request, response);
-    }
+        response.sendRedirect("/rentmanager/cars");
+   }
+
 }

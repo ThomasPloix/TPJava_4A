@@ -7,8 +7,8 @@ public class Vehicle {
     private int seats;
     private String modele;
 
-    public Vehicle(long id, String constructeur, int nb_places,String modele) {
-        this.id = id;
+    public Vehicle(long id , String constructeur, int nb_places,String modele) {
+        this.id=id;
         this.constructeur = constructeur;
         this.seats = nb_places;
         this.modele = modele;
@@ -30,7 +30,7 @@ public class Vehicle {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

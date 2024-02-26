@@ -33,11 +33,12 @@ public class VehicleDao {
 		){
 			ps.setString(1, vehicle.getConstructeur());
 			ps.setInt(2, vehicle.getSeats());
-			ps.setString(1, vehicle.getModele());
+			ps.setString(3, vehicle.getModele());
 			ps.executeUpdate();
 			ResultSet resultSet = ps.getGeneratedKeys();
 			if (resultSet.next()) {
 				long idCreer= resultSet.getLong(1);
+				vehicle.setId(idCreer);
 				return idCreer;
 			}else throw new DaoException("Erreur lors de la creation du vehicule");
 		} catch (SQLException e) {
@@ -53,7 +54,6 @@ public class VehicleDao {
 			long id= vehicle.getId();
 			ps.setLong(1, id);
 			ps.executeUpdate();
-
 			return id;
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -75,7 +75,7 @@ public class VehicleDao {
 				String constructeur = resultSet.getString(2);
 				int nbDeplace = resultSet.getInt(3);
 				String modele = resultSet.getString(4);
-				return new Vehicle(id,constructeur, nbDeplace,modele);
+				return new Vehicle(id, constructeur, nbDeplace,modele);
 			} else throw new DaoException("Erreur lors de la recherche");
 
 		} catch (SQLException e) {
@@ -94,12 +94,15 @@ public class VehicleDao {
 				String constructeur = resultSet.getString(2);
 				int nbDeplace = resultSet.getInt(3);
 				String modele = resultSet.getString(4);
-				lVehicule.add(new Vehicle(id, constructeur, nbDeplace, modele));
+				lVehicule.add(new Vehicle( id, constructeur, nbDeplace, modele));
 			}
 			return lVehicule;
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 	}
 	}
+
+
+
 
 }
