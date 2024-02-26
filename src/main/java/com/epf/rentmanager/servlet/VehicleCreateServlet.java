@@ -25,7 +25,7 @@ public class VehicleCreateServlet extends HttpServlet {
 
         VehicleService vehicleService = VehicleService.getInstance();
         try {
-            vehicleService.create(new Vehicle(1, constructeur,seat,modele));
+            vehicleService.Create(new Vehicle(1, constructeur,seat,modele));
         } catch (ServiceException e) {
             throw new RuntimeException(e);
         }

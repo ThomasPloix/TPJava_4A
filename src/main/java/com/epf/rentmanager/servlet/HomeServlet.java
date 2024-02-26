@@ -1,5 +1,8 @@
 package com.epf.rentmanager.servlet;
 
+import com.epf.rentmanager.service.ServiceException;
+import com.epf.rentmanager.service.VehicleService;
+
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -18,8 +21,13 @@ public class HomeServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		this.getServletContext().getRequestDispatcher("/WEB-INF/views/home.jsp").forward(request, response);
+		VehicleService vehicleService = VehicleService.getInstance();
+        try {
+            request.setAttribute("countVehicule",vehicleService.countVehicule());
+        } catch (ServiceException e) {
+            throw new RuntimeException(e);
+        }
+        this.getServletContext().getRequestDispatcher("/WEB-INF/views/home.jsp").forward(request, response);
 	}
 
 }

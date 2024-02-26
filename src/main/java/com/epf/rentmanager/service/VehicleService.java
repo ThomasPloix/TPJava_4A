@@ -26,7 +26,7 @@ public class VehicleService {
 	}
 	
 	
-	public long create(Vehicle vehicle) throws ServiceException {
+	public long Create(Vehicle vehicle) throws ServiceException {
 		if(vehicle.getSeats()<=1 || vehicle.getConstructeur().isEmpty()){
 			throw new ServiceException("Erreur lors de la création du vehicule; nombre de place <1");
 		}
@@ -57,5 +57,12 @@ public class VehicleService {
 			throw new ServiceException("Erreur lors de la récupération de la liste des vehicules");
 		}
     }
+	public int countVehicule() throws ServiceException{
+		try {
+            return vehicleDao.countVehiculeDao();
+		}catch (DaoException e) {
+			throw new ServiceException("Erreur lors de la récupération de la liste des vehicules");
+		}
+	}
 	
 }
