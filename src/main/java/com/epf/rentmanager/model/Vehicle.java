@@ -4,12 +4,22 @@ public class Vehicle {
 
     private long id;
     private String constructeur;
-    private int nb_places;
+    private int seats;
+    private String modele;
 
-    public Vehicle(long id, String constructeur, int nb_places) {
+    public Vehicle(long id, String constructeur, int nb_places,String modele) {
         this.id = id;
         this.constructeur = constructeur;
-        this.nb_places = nb_places;
+        this.seats = nb_places;
+        this.modele = modele;
+    }
+
+    public String getModele() {
+        return modele;
+    }
+
+    public void setModele(String modele) {
+        this.modele = modele;
     }
 
     public Vehicle() {
@@ -32,12 +42,12 @@ public class Vehicle {
         this.constructeur = constructeur;
     }
 
-    public int getNb_places() {
-        return nb_places;
+    public int getSeats() {
+        return seats;
     }
 
-    public void setNb_places(int nb_places) {
-        this.nb_places = nb_places;
+    public void setSeats(int nb_places) {
+        this.seats = nb_places;
     }
 
     @Override
@@ -45,7 +55,7 @@ public class Vehicle {
         return "VehicleModel{" +
                 "id=" + id +
                 ", constructeur='" + constructeur + '\'' +
-                ", nb_places=" + nb_places +
+                ", nb_places=" + seats +
                 '}';
     }
 }
