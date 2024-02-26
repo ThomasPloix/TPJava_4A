@@ -27,7 +27,7 @@ public class VehicleService {
 	
 	
 	public long create(Vehicle vehicle) throws ServiceException {
-		if(vehicle.getNb_places()<=1 || vehicle.getConstructeur().isEmpty()){
+		if(vehicle.getSeats()<=1 || vehicle.getConstructeur().isEmpty()){
 			throw new ServiceException("Erreur lors de la création du vehicule; nombre de place <1");
 		}
 		try{
