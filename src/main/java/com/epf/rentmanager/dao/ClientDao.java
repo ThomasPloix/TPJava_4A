@@ -2,6 +2,7 @@ package com.epf.rentmanager.dao;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,8 @@ import com.epf.rentmanager.persistence.ConnectionManager;
 public class ClientDao {
 	
 	private static ClientDao instance = null;
+	private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd 00:00:00");
+
 	private ClientDao() {}
 	public static ClientDao getInstance() {
 		if(instance == null) {
@@ -25,10 +28,9 @@ public class ClientDao {
 	private static final String FIND_CLIENTS_QUERY = "SELECT id, nom, prenom, email, naissance FROM Client;";
 	
 	public long create(Client client) throws DaoException {
-		try {
-			Connection connection = ConnectionManager.getConnection();
-			PreparedStatement ps =
-					connection.prepareStatement(CREATE_CLIENT_QUERY, Statement.RETURN_GENERATED_KEYS);
+		try (Connection connection = ConnectionManager.getConnection();
+			 PreparedStatement ps =
+					 connection.prepareStatement(CREATE_CLIENT_QUERY, Statement.RETURN_GENERATED_KEYS);){
 
 			ps.setString(1, client.getName());
 			ps.setString(2, client.getPrenom());
@@ -36,10 +38,10 @@ public class ClientDao {
 			ps.setDate(4, Date.valueOf(client.getNaissance()));
 			ps.executeUpdate();
 			ResultSet resultSet = ps.getGeneratedKeys();
-			ps.close();
-			connection.close();
 			if (resultSet.next()) {
 				long idCreer= resultSet.getLong(1);
+				client.setId(idCreer);
+				System.out.println(idCreer);
 				return idCreer;
 			}else throw new DaoException("Erreur lors de la creation du Client");
 		} catch (SQLException e) {
@@ -78,7 +80,7 @@ public class ClientDao {
 				String name = resultSet.getString(1);
 				String prenom = resultSet.getString(2);
 				String email = resultSet.getString(3);
-				String naissance = resultSet.getString(4);
+				LocalDate naissance = LocalDate.parse(resultSet.getString(4),formatter);
 				return new Client(id, name, prenom, email, naissance);
 			} else throw new DaoException("Erreur lors de la recherche");
 
@@ -97,9 +99,8 @@ public class ClientDao {
 					String name = resultSet.getString(2);
 					String prenom = resultSet.getString(3);
 					String email = resultSet.getString(4);
-                    String naissance = resultSet.getString(5);
+                    LocalDate naissance = LocalDate.parse( resultSet.getString(5),formatter);
 					Client client=new Client(id, name, prenom, email, naissance);
-					System.out.println(client);
 					lClient.add(client);
                 }
                 return lClient;
