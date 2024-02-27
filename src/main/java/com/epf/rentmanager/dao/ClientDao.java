@@ -88,25 +88,20 @@ public class ClientDao {
 	}
 
         public List<Client> findAll() throws DaoException {
-			try {
-                Connection connection = ConnectionManager.getConnection();
-                PreparedStatement ps =
-                        connection.prepareStatement(FIND_CLIENTS_QUERY, Statement.RETURN_GENERATED_KEYS);
-                ps.executeQuery();
-                ResultSet resultSet = ps.getGeneratedKeys();
-                ps.close();
-                connection.close();
-                resultSet.next();
-
-				List<Client> lClient= new ArrayList<>();
-                do {
+			List<Client> lClient= new ArrayList<>();
+			try (Connection connection = ConnectionManager.getConnection();
+				 PreparedStatement ps = connection.prepareStatement(FIND_CLIENTS_QUERY);
+				 ResultSet resultSet = ps.executeQuery()) {
+				while (resultSet.next()) {
 					long id = resultSet.getLong(1);
 					String name = resultSet.getString(2);
 					String prenom = resultSet.getString(3);
 					String email = resultSet.getString(4);
                     String naissance = resultSet.getString(5);
-					lClient.add(new Client(id, name, prenom, email, naissance));
-                } while (resultSet.next());
+					Client client=new Client(id, name, prenom, email, naissance);
+					System.out.println(client);
+					lClient.add(client);
+                }
                 return lClient;
             } catch (SQLException e) {
 				throw new RuntimeException(e);

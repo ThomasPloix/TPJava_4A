@@ -1,6 +1,7 @@
 package com.epf.rentmanager.model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Client {
     private long id;
@@ -8,13 +9,14 @@ public class Client {
     private String prenom;
     private String email;
     private LocalDate naissance;
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd 00:00:00");
 
     public Client(long id, String name, String prenom, String email, String naissance) {
         this.id = id;
         this.name = name;
         this.prenom = prenom;
         this.email = email;
-        this.naissance = LocalDate.parse(naissance);
+        this.naissance = LocalDate.parse(naissance,formatter);
     }
 
     public Client() {
