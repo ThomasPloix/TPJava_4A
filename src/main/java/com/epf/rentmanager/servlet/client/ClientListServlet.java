@@ -1,4 +1,4 @@
-package com.epf.rentmanager.servlet;
+package com.epf.rentmanager.servlet.client;
 
 
 import com.epf.rentmanager.model.Client;
