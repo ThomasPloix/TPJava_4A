@@ -6,23 +6,17 @@ import java.util.List;
 import com.epf.rentmanager.dao.DaoException;
 import com.epf.rentmanager.model.Vehicle;
 import com.epf.rentmanager.dao.VehicleDao;
+import org.springframework.stereotype.Service;
 
+@Service
 public class VehicleService {
 
 	private VehicleDao vehicleDao;
-	public static VehicleService instance;
 	
-	private VehicleService() {
-		this.vehicleDao = VehicleDao.getInstance();
+	private VehicleService(VehicleDao vehicleDao) {
+		this.vehicleDao = vehicleDao;
 	}
-	
-	public static VehicleService getInstance() {
-		if (instance == null) {
-			instance = new VehicleService();
-		}
-		
-		return instance;
-	}
+
 	
 	
 	public long Create(Vehicle vehicle) throws ServiceException {
