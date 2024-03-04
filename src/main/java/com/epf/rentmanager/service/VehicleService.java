@@ -4,7 +4,6 @@ import java.util.List;
 
 
 import com.epf.rentmanager.dao.DaoException;
-import com.epf.rentmanager.model.Client;
 import com.epf.rentmanager.model.Vehicle;
 import com.epf.rentmanager.dao.VehicleDao;
 
@@ -34,6 +33,17 @@ public class VehicleService {
 			return vehicleDao.create(vehicle);
 		} catch (DaoException e) {
 			throw new RuntimeException(e);
+		}
+    }
+
+	public void deleteById(long id) throws ServiceException{
+		try{
+			boolean done =vehicleDao.delete(id);
+			if(!done){
+			throw new ServiceException("Le vehicule n°" +id + " n'a pas été supprimé dans la base de donnée");
+			}
+		} catch (DaoException e) {
+			throw new ServiceException("Erreur lors de la suppression du vehicule");
 		}
     }
 

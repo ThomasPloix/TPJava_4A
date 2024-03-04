@@ -46,19 +46,17 @@ public class VehicleDao {
 		}
 	}
 
-	public long delete(Vehicle vehicle) throws DaoException {
+	public boolean delete(long id) throws DaoException {
 		try (Connection connection = ConnectionManager.getConnection();
 			 PreparedStatement ps =
 					 connection.prepareStatement(DELETE_VEHICLE_QUERY);){
-
-			long id= vehicle.getId();
 			ps.setLong(1, id);
 			ps.executeUpdate();
-			return id;
+			return true;
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
-	}
+    }
 
 	public Vehicle findById(long id) throws DaoException {
 		try (Connection connection = ConnectionManager.getConnection();
