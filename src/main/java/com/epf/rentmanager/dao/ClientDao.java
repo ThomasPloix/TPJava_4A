@@ -41,7 +41,6 @@ public class ClientDao {
 			if (resultSet.next()) {
 				long idCreer= resultSet.getLong(1);
 				client.setId(idCreer);
-				System.out.println(idCreer);
 				return idCreer;
 			}else throw new DaoException("Erreur lors de la creation du Client");
 		} catch (SQLException e) {
