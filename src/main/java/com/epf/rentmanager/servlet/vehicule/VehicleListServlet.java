@@ -27,13 +27,13 @@ public class VehicleListServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Vehicle> tve= new ArrayList<>();
+        List<Vehicle> lvehicule;
         try {
-            tve= vehicleService.findAll();
+            lvehicule= vehicleService.findAll();
         } catch (ServiceException e) {
             throw new RuntimeException(e);
         }
-        request.setAttribute("vehicles",tve);
+        request.setAttribute("vehicles",lvehicule);
         this.getServletContext().getRequestDispatcher("/WEB-INF/views/vehicles/list.jsp").forward(request, response);
     }
 }

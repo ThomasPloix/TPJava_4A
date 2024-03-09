@@ -22,9 +22,6 @@ public class Vehicle {
         this.modele = modele;
     }
 
-    public Vehicle() {
-
-    }
 
     public long getId() {
         return id;

@@ -3,9 +3,9 @@ package com.epf.rentmanager.dao;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import com.epf.rentmanager.model.Client;
+
+
 import com.epf.rentmanager.model.Vehicle;
 import com.epf.rentmanager.persistence.ConnectionManager;
 import org.springframework.stereotype.Repository;
