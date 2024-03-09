@@ -19,7 +19,6 @@ public class Client {
     }
 
     public Client() {
-
     }
 
     public long getId() {
@@ -72,4 +71,12 @@ public class Client {
                 ", naissance=" + naissance +
                 '}';
     }
+
+    public boolean isLegal(){
+        LocalDate Now= LocalDate.now();
+    return false;
+    }
+
+
+
 }

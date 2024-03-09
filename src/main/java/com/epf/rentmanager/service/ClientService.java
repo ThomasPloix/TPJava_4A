@@ -52,5 +52,12 @@ public class ClientService {
             throw new ServiceException("Erreur lors de la récupération de la liste des clients");
         }
 	}
-	
+	public int countClient() throws ServiceException{
+		try {
+			return clientDao.countClientDao();
+		}catch (DaoException e) {
+		throw new ServiceException("Erreur lors de la récupération de la liste des clients");
+		}
+}
+
 }
