@@ -21,7 +21,7 @@ public class ReservationService {
         try{
             long  id=reservationDao.create(reservation);
             reservation.setId(id);
-            return reservationDao.create(reservation);
+            return id;
         } catch (DaoException e) {
             throw new RuntimeException(e);
         }
