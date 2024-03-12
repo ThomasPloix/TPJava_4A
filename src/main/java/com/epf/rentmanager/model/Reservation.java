@@ -3,13 +3,13 @@ package com.epf.rentmanager.model;
 import java.time.LocalDate;
 
 public class Reservation {
-    private int id;
-    private int client_id;
-    private int vehicle_id;
+    private long id;
+    private long client_id;
+    private long vehicle_id;
     private LocalDate dateDebut;
     private LocalDate dateFin;
 
-    public Reservation(int id, int client_id, int vehicle_id, LocalDate dateDebut, LocalDate dateFin) {
+    public Reservation(long id, long client_id, long vehicle_id, LocalDate dateDebut, LocalDate dateFin) {
         this.id = id;
         this.client_id = client_id;
         this.vehicle_id = vehicle_id;
@@ -21,27 +21,27 @@ public class Reservation {
 
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public int getClient_id() {
+    public long getClient_id() {
         return client_id;
     }
 
-    public void setClient_id(int client_id) {
+    public void setClient_id(long client_id) {
         this.client_id = client_id;
     }
 
-    public int getVehicle_id() {
+    public long getVehicle_id() {
         return vehicle_id;
     }
 
-    public void setVehicle_id(int vehicle_id) {
+    public void setVehicle_id(long vehicle_id) {
         this.vehicle_id = vehicle_id;
     }
 

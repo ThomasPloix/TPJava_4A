@@ -16,9 +16,11 @@ public class ReservationService {
         this.reservationDao = reservationDao;
     }
 
-    public long create(Reservation reservation) throws DaoException {
+    public long create(Reservation reservation) throws ServiceException {
 
         try{
+            long  id=reservationDao.create(reservation);
+            reservation.setId(id);
             return reservationDao.create(reservation);
         } catch (DaoException e) {
             throw new RuntimeException(e);
