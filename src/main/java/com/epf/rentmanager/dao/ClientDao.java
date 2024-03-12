@@ -52,8 +52,6 @@ public class ClientDao {
 				long id= client.getId();
 				ps.setLong(1, id);
 				ps.executeUpdate();
-				ps.close();
-				connection.close();
 				return id;
 			} catch (SQLException e) {
 				throw new RuntimeException(e);
@@ -61,16 +59,12 @@ public class ClientDao {
 	}
 
 	public Client findById(long id) throws DaoException {
-		try {
-			Connection connection = ConnectionManager.getConnection();
-			PreparedStatement ps =
-					connection.prepareStatement(FIND_CLIENT_QUERY, Statement.RETURN_GENERATED_KEYS);
-
+		try (Connection connection = ConnectionManager.getConnection();
+			 PreparedStatement ps =
+					 connection.prepareStatement(FIND_CLIENT_QUERY);
+		){
 			ps.setLong(1, id);
-			ps.executeQuery();
-			ResultSet resultSet = ps.getGeneratedKeys();
-			ps.close();
-			connection.close();
+			ResultSet resultSet = ps.executeQuery();
 			if (resultSet.next()) {
 				String name = resultSet.getString(1);
 				String prenom = resultSet.getString(2);
