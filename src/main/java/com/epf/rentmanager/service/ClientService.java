@@ -29,7 +29,15 @@ public class ClientService {
             throw new RuntimeException(e);
         }
     }
+	public void delete(long id) throws ServiceException {
+		try {
+			boolean done = clientDao.delete(id);
+			if(!done){
+				throw new ServiceException("Le vehicule n°" +id + " n'a pas été supprimé dans la base de donnée");
+			}} catch (DaoException e) {
+		throw new ServiceException("Erreur lors de la suppression du vehicule");
 
+	}}
 	public Client findById(long id) throws ServiceException {
 		try{
 			Client client = clientDao.findById(id);

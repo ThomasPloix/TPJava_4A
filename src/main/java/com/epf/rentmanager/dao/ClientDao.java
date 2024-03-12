@@ -44,15 +44,13 @@ public class ClientDao {
 		}
 	}
 
-        public long delete(Client client) throws DaoException {
-			try {
-				Connection connection = ConnectionManager.getConnection();
-				PreparedStatement ps =
-						connection.prepareStatement(DELETE_CLIENT_QUERY);
-				long id= client.getId();
-				ps.setLong(1, id);
+        public boolean delete(long clientID) throws DaoException {
+			try (Connection connection = ConnectionManager.getConnection();
+				 PreparedStatement ps =
+						 connection.prepareStatement(DELETE_CLIENT_QUERY);){
+				ps.setLong(1, clientID);
 				ps.executeUpdate();
-				return id;
+				return true;
 			} catch (SQLException e) {
 				throw new RuntimeException(e);
 			}
