@@ -11,10 +11,8 @@ import com.epf.rentmanager.persistence.ConnectionManager;
 import org.springframework.stereotype.Repository;
 
 @Repository
-
 public class ClientDao {
-	
-	private static ClientDao instance = null;
+
 	private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd 00:00:00");
 
 	private ClientDao() {}
