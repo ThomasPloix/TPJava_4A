@@ -21,12 +21,14 @@ public class ClientDao {
 	private static final String DELETE_CLIENT_QUERY = "DELETE FROM Client WHERE id=?;";
 	private static final String FIND_CLIENT_QUERY = "SELECT nom, prenom, email, naissance FROM Client WHERE id=?;";
 	private static final String FIND_CLIENTS_QUERY = "SELECT id, nom, prenom, email, naissance FROM Client;";
+
+	private static final String FIND_CLIENTS_SHORT = "SELECT id, nom FROM Client;";
 	private static final String COUNT_CLIENT_QUERY="SELECT COUNT(*) FROM Client;";
 
 	public long create(Client client) throws DaoException {
 		try (Connection connection = ConnectionManager.getConnection();
 			 PreparedStatement ps =
-					 connection.prepareStatement(CREATE_CLIENT_QUERY, Statement.RETURN_GENERATED_KEYS);){
+					 connection.prepareStatement(CREATE_CLIENT_QUERY, Statement.RETURN_GENERATED_KEYS)){
 
 			ps.setString(1, client.getName());
 			ps.setString(2, client.getPrenom());
@@ -47,7 +49,7 @@ public class ClientDao {
         public boolean delete(long clientID) throws DaoException {
 			try (Connection connection = ConnectionManager.getConnection();
 				 PreparedStatement ps =
-						 connection.prepareStatement(DELETE_CLIENT_QUERY);){
+						 connection.prepareStatement(DELETE_CLIENT_QUERY)){
 				ps.setLong(1, clientID);
 				ps.executeUpdate();
 				return true;
@@ -59,7 +61,7 @@ public class ClientDao {
 	public Client findById(long id) throws DaoException {
 		try (Connection connection = ConnectionManager.getConnection();
 			 PreparedStatement ps =
-					 connection.prepareStatement(FIND_CLIENT_QUERY);
+					 connection.prepareStatement(FIND_CLIENT_QUERY)
 		){
 			ps.setLong(1, id);
 			ResultSet resultSet = ps.executeQuery();
@@ -97,7 +99,7 @@ public class ClientDao {
 
 	}
 	public int countClientDao() throws DaoException {
-		int countClient=0;
+		int countClient;
 		try (Connection connection = ConnectionManager.getConnection();
 			 PreparedStatement ps = connection.prepareStatement(COUNT_CLIENT_QUERY);
 			 ResultSet resultSet = ps.executeQuery()) {
