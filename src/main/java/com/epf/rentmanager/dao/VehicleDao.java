@@ -60,8 +60,7 @@ public class VehicleDao {
 
 			){
 			ps.setLong(1, id);
-			ps.executeQuery();
-			ResultSet resultSet = ps.getGeneratedKeys();
+			ResultSet resultSet = ps.executeQuery();
 
 			if (resultSet.next()) {
 				id = resultSet.getInt(1);

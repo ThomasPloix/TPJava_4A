@@ -5,7 +5,10 @@ import java.time.LocalDate;
 public class Reservation {
     private long id;
     private long client_id;
+    private String clientName;
     private long vehicle_id;
+
+    private String vehiculeName;
     private LocalDate dateDebut;
     private LocalDate dateFin;
 
@@ -59,6 +62,22 @@ public class Reservation {
 
     public void setDateFin(LocalDate dateFin) {
         this.dateFin = dateFin;
+    }
+
+    public String getClientName() {
+        return clientName;
+    }
+
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
+    }
+
+    public String getVehiculeName() {
+        return vehiculeName;
+    }
+
+    public void setVehiculeName(String vehiculeName) {
+        this.vehiculeName = vehiculeName;
     }
 
     @Override

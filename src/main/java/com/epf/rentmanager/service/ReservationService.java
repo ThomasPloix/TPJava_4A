@@ -38,8 +38,7 @@ public class ReservationService {
     }
     public List<Reservation> findAll() throws ServiceException {
         try {
-            List<Reservation> lreservation = reservationDao.findAll();
-            return lreservation;
+            return reservationDao.findAll();
         } catch (DaoException e) {
             throw new ServiceException("Erreur lors de la récupération de la liste des reservation");
         }

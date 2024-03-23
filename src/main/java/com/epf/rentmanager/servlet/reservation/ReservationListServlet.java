@@ -1,8 +1,12 @@
 package com.epf.rentmanager.servlet.reservation;
 
+import com.epf.rentmanager.model.Client;
 import com.epf.rentmanager.model.Reservation;
+import com.epf.rentmanager.model.Vehicle;
+import com.epf.rentmanager.service.ClientService;
 import com.epf.rentmanager.service.ReservationService;
 import com.epf.rentmanager.service.ServiceException;
+import com.epf.rentmanager.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
@@ -20,6 +24,11 @@ public class ReservationListServlet extends HttpServlet {
 
     @Autowired
     ReservationService reservationService;
+    @Autowired
+    VehicleService vehicleService;
+    @Autowired
+    ClientService clientService;
+
     @Override
     public void init() throws ServletException {
         super.init();
@@ -30,6 +39,14 @@ public class ReservationListServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             List<Reservation> lreservation = reservationService.findAll();
+            for (Reservation reservation : lreservation ) {
+                Client client =clientService.findById(reservation.getClient_id());
+                reservation.setClientName(client.getPrenom()+" "+ client.getName());
+
+                Vehicle vehicule = vehicleService.findById(reservation.getVehicle_id());
+                reservation.setVehiculeName(vehicule.getConstructeur()+" "+ vehicule.getModele() );
+            }
+
             request.setAttribute("reservations",lreservation);
         } catch (ServiceException e) {
             throw new RuntimeException(e);
