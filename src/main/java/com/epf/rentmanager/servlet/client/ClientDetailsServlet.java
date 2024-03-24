@@ -38,9 +38,6 @@ public class ClientDetailsServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
 
-
-
-        System.out.println(id);
         this.getServletContext().getRequestDispatcher("/WEB-INF/views/users/details.jsp").forward(request, response);
     }
 }

@@ -28,7 +28,6 @@ public class ClientModifServlet extends HttpServlet {
         long id = Long.parseLong(request.getParameter("id"));
         try {
             Client client = clientService.findById(id);
-            System.out.print(client);
             request.setAttribute("last_name",client.getName());
              request.setAttribute("first_name",client.getPrenom());
              request.setAttribute("email",client.getEmail());
